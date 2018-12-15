@@ -66,6 +66,7 @@ function mousePressed() {
 	if(d <= 5){
 
 		alert("Ganaste Prro");
+		location.reload();
 
 	}
 
