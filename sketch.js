@@ -39,45 +39,33 @@ function setup() {
 	init();
 
 	pista = document.getElementById("pos");
-	dificultad = prompt("dificultad (0: medio, 1: dificil, 2: tu solo): ");
-
+	dificultad = 0//prompt("dificultad (0: medio, 1: dificil, 2: tu solo): ");
+/*
 	if(dificultad == 1) {
 		pos.innerHTML = "no hay prro (weno si la hay pero no te wa decir donde esta 7u7)";
 	}
 	else if(dificultad == 2) {
 		pos.innerHTML = "no hay prro, busca soledad";
-	}
+	}*/
 }
 
 function draw() {
 	
   	clear();
 
-	if(state == 0){
-		let mouseDistance = dist(mouseX, mouseY, x , y);
-
-		if(dificultad == 0) pos.innerHTML = int(mouseDistance);
-
-		for (var i = 0; i < rectCant; i++) {
-			for (var j = 0; j < rectCant; j++) {
-				drawRect(j, i);
-			}
-		}
-
-		drawCircle();
-
-		if(isMousePressed && mouseDistance <= circleSize){
-			state = 1;
-			addPoint();
-		}
-	}else if(state == 1){
-		drawWin();
-
-		if(isMousePressed){
-			state = 0;
-			init();
-		}
-	}
+	  let mouseDistance = dist(mouseX, mouseY, x , y);
+	  if(dificultad == 0) pos.innerHTML = int(mouseDistance);
+	  for (var i = 0; i < rectCant; i++) {
+		  for (var j = 0; j < rectCant; j++) {
+			  drawRect(j, i);
+		  }
+	  }
+	  drawCircle();
+	  if(isMousePressed && mouseDistance <= (circleSize*0.5)+1){
+		  state = 1;
+		  addPoint();
+		  init();
+	  }
 
 	drawTimer();
 
