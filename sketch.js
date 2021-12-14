@@ -1,73 +1,133 @@
+let canvas;
+let gameContainer;
+let pointsContainer;
+let timerContainer;
 
-var x, y;
-var d;
-var div;
-var dificultad;
+let x, y;
+let pista;
+let dificultad;
+
+let points = 0;
+
+let offset = 1;
+let rectCant = 10;
+let rectSize = 0;
+
+let circleSize = 6;
+
+let isMousePressed = false;
+let state = 0;
+
+let timer = 0;
 
 function setup() {
  	
-	createCanvas(501, 501);
+	canvas = createCanvas(501, 501).canvas;
+	canvas.id = "game";
 
-  	x = int(random(2,9));
-	y = int(random(2,9));
+	gameContainer = document.getElementById('game-container');
+	gameContainer.insertBefore(canvas, gameContainer.firstChild);
 
-	div = document.getElementById("pos");
+	pointsContainer = document.getElementById('points');
+	pointsContainer.innerHTML = points;
+
+	timerContainer = document.getElementById('timer');
+	timerContainer.innerHTML = timer;
+
+	rectSize = width / rectCant;
+
+	init();
+
+	pista = document.getElementById("pos");
 	dificultad = prompt("dificultad (0: medio, 1: dificil, 2: tu solo): ");
 
+	if(dificultad == 1) {
+		pos.innerHTML = "no hay prro (weno si la hay pero no te wa decir donde esta 7u7)";
+	}
+	else if(dificultad == 2) {
+		pos.innerHTML = "no hay prro, busca soledad";
+	}
 }
 
 function draw() {
+	
+  	clear();
 
-  	background(255); 
+	if(state == 0){
+		let mouseDistance = dist(mouseX, mouseY, x , y);
 
-	console.log(d);
+		if(dificultad == 0) pos.innerHTML = int(mouseDistance);
 
-  	for (var i = 0; i < 10; i++) {
-  		
-  		for (var j = 0; j < 10; j++) {
-  			
-  			fill(0);
-  			rect(50*j, 50*i, 45, 45);
+		for (var i = 0; i < rectCant; i++) {
+			for (var j = 0; j < rectCant; j++) {
+				drawRect(j, i);
+			}
+		}
 
-  			if(i == x && j == y){
+		drawCircle();
 
-  				noStroke();
-  				fill(150);
-  				ellipse(49.5*j, 49.5*i , 5);
-  				d = dist(mouseX, mouseY, 49.5*j, 49.5*i);
+		if(isMousePressed && mouseDistance <= circleSize){
+			state = 1;
+			addPoint();
+		}
+	}else if(state == 1){
+		drawWin();
 
-  				if(dificultad == 0){
+		if(isMousePressed){
+			state = 0;
+			init();
+		}
+	}
 
-  					pos.innerHTML = int(d);
+	drawTimer();
 
-  				}
-  				else if(dificultad == 1) {
+	isMousePressed = false;
+}
 
-  					pos.innerHTML = "no hay prro (weno si la hay pero no te wa decir donde esta 7u7)";
+function init(){
+	x = int(random(0,rectCant-1)) * rectSize;
+	y = int(random(0,rectCant-1)) * rectSize;
+}
 
-  				}
-  				else if(dificultad == 2) {
+function addPoint(){
+	points++;
+	pointsContainer.innerHTML = points;
+}
 
-  					pos.innerHTML = "no hay prro, busca soledad";
+function drawCircle(){
+	fill(150);
+	ellipse(x,y,circleSize);
+}
 
-  				}
+function drawRect(rX, rY){
 
-  			}
+	let pX = rectSize*rX + offset;
+	let pY = rectSize*rY + offset;
+	let w  = rectSize - 2 * offset;
+	let h  = rectSize - 2 * offset;
 
-  		}
+	fill(0);
+	rect(pX, pY, w, h);
+}
 
-  	}
+function drawWin(){
+	fill(0);
+	textSize(80);
+	textAlign(CENTER,CENTER);
+	text("GANASTE!!", width*0.5, height*0.5);
+	textSize(30);
+	text("\n\n\nclick para jugar denuevo", width*0.5, height*0.5);
+}
 
+function drawTimer(){
+
+	timerContainer.innerHTML = (timer).toFixed(1);
+
+	let infLayer = deltaTime/1000;
+
+	timer += (infLayer == Infinity)? 0 : infLayer;
 }
 
 function mousePressed() {
-  
-
-	if(d <= 5){
-
-		alert("Ganaste Prro");
-		location.reload();
-
-	}
-
+	isMousePressed = true;
 }

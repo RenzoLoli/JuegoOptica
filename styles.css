@@ -1,0 +1,24 @@
+html{
+    min-height: 100vh;
+    color: black;
+    background-color: skyblue;
+}
+
+.title{
+    font-size: 2rem;
+    padding-inline: 90px;
+    text-align: center;
+}
+
+#game-container{
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+
+    min-height: 100%;
+    font-size: 2rem;
+    padding-inline: 90px;
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+}

@@ -3,12 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
-    <script src="p5.js"></script>
-    <script src="sketch.js"></script>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
 
-  	<h1>ENCUENTRA EL PUNTO NEGRO VERDADERO ENTRE LOS CUADRADOS</h1>
-  	<h2>pista: <div id="pos"></div></h2>
+  	<div class="title">
+      <h1>Optic Game</h1>
+    </div>
+
+  	<div id="game-container">
+      <div>
+        <h2>tiempo:<div id="timer"></div></h2>
+        <h2>pista: <div id="pos"></div></h2>
+        <h2>puntos:<div id="points"></div></h2>
+      </div>
+    </div>
+
+    <script src="p5.js"></script>
+    <script src="sketch.js"></script>
   </body>
 </html>
